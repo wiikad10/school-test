@@ -1,16 +1,36 @@
-name: My First Pipeline
+
+name: Project Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Test
-        run: echo "Hello GitHub Actions!"
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f script.js
+          test -f aaaaa.js
+          test -f ss.html
+          echo "All required files exist!"
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check script.js
+          node --check aaaaa.js
+          echo "JavaScript syntax is valid!"
+
+      - name: List project files
+        run: ls -la
+
+      - name: Pipeline completed
+        run: echo "All tests passed!"
