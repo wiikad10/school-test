@@ -8,10 +8,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Get repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check files
-        run: ls
+      - name: Test
+        run: echo "Hello GitHub Actions!"
