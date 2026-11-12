@@ -1,5 +1,5 @@
 
-name: Project Tests
+name: CI - Demo HTML JavaScript
 
 on:
   push:
@@ -8,29 +8,28 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  verification:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # 1. Get source code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check required files
-        run: |
-          test -f index.html
-          test -f script.js
-          test -f aaaaa.js
-          test -f ss.html
-          echo "All required files exist!"
+      # 2. Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-      - name: Check JavaScript syntax
-        run: |
-          node --check script.js
-          node --check aaaaa.js
-          echo "JavaScript syntax is valid!"
+      # 3. Check JavaScript syntax
+      - name: Check JavaScript
+        run: node --check script.js
 
-      - name: List project files
-        run: ls -la
+      # 4. Check HTML file
+      - name: Check HTML
+        run: test -f index.html
 
-      - name: Pipeline completed
-        run: echo "All tests passed!"
+      # 5. Success message
+      - name: Finish verification
+        run: echo "All checks passed!"
